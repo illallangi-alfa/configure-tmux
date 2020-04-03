@@ -1,0 +1,13 @@
+---
+- name: "Update templates"
+  template:
+    src:  "{{ item.src | default((item.dest | basename ()) + '.j2')}}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default(item.owner | default('root')) }}"
+  with_items:
+    - dest: "/usr/local/bin/monitor.sh"
+      mode: "0755"
+  tags:
+    - "tmux"
